@@ -5,8 +5,6 @@ import websockets.asyncio.client as ws_client
 from SimConnect import SimConnect, Enum
 from SimConnect.Enum import SIMCONNECT_CLIENT_DATA_ID, SIMCONNECT_RECV_ID, SIMCONNECT_RECV_CLIENT_DATA
 
-from src.MobiFlightConnector.Scripts.Winwing.ini_a340_winwing_cdu import special_chars
-
 # --- Config ---
 CAPTAIN_MCDU_URL = "ws://localhost:8320/winwing/cdu-captain"
 FO_MCDU_URL = "ws://localhost:8320/winwing/cdu-co-pilot"
