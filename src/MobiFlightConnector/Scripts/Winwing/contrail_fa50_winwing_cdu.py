@@ -5,22 +5,24 @@ import websockets.asyncio.client as ws_client
 from SimConnect import SimConnect, Enum
 from SimConnect.Enum import SIMCONNECT_CLIENT_DATA_ID, SIMCONNECT_RECV_ID, SIMCONNECT_RECV_CLIENT_DATA
 
+from src.MobiFlightConnector.Scripts.Winwing.ini_a340_winwing_cdu import special_chars
+
 # --- Config ---
 CAPTAIN_MCDU_URL = "ws://localhost:8320/winwing/cdu-captain"
 FO_MCDU_URL = "ws://localhost:8320/winwing/cdu-co-pilot"
 MCDU_FLAG_SMALL_FONT = 0x01
 
 MCDU_COLOR_MAP = {0:"w",1:"r",2:"o",3:"g",4:"y"}
-j = {'a':'←','b':'→','e':'↑','f':'↓','o':'☐','d':'°','c':'Δ','p':'■'}
+special_chars = {'a':'←','b':'→','e':'↑','f':'↓','o':'☐','d':'°','c':'Δ','p':'■'}
 
 MCDU_COLUMNS, MCDU_ROWS = 24, 14
 FA50_CDU_COLUMNS, FA50_CDU_ROWS = 22, 10
 MCDU_CHARS = MCDU_COLUMNS * MCDU_ROWS
 
 MCDU_DATA_SIZE = (22 * 3 * 10) + 10
-FA50_MCDU_CPT_NAME, FA50_CPT_MCDU_CLIENT_DATA_ID = "FA50_CDU_LEFT", 30000
+FA50_MCDU_CPT_NAME, FA50_CPT_MCDU_CLIENT_DATA_ID = "FA50_CDU_LEFT", 1
 FA50_MCDU_FO_NAME, FA50_FO_MCDU_CLIENT_DATA_ID = "FA50_CDU_RIGHT", 2
-FA50_MCDU_CPT_DEFINITION, FA50_MCDU_FO_DEFINITION = 69, 4
+FA50_MCDU_CPT_DEFINITION, FA50_MCDU_FO_DEFINITION = 3, 4
 
 # --- SimConnect Wrapper ---
 class SimConnectMobiFlight(SimConnect):
