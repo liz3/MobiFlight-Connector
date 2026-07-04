@@ -11,7 +11,6 @@ FO_MCDU_URL = "ws://localhost:8320/winwing/cdu-co-pilot"
 MCDU_FLAG_SMALL_FONT = 0x01
 
 MCDU_COLOR_MAP = {0:"w",1:"r",2:"o",3:"g",4:"y"}
-special_chars = {'a':'←','b':'→','e':'↑','f':'↓','o':'☐','d':'°','c':'Δ','p':'■'}
 
 MCDU_COLUMNS, MCDU_ROWS = 24, 14
 FA50_CDU_COLUMNS, FA50_CDU_ROWS = 22, 10
@@ -134,8 +133,7 @@ class Fa50MCDUClient:
 
     def on_data(self, d:Any):
         if d.dwDefineID!=self.def_id or not hasattr(d,"dwData"): return
-        count=int(MCDU_DATA_SIZE)
-        data=b"".join(struct.pack("I",x) for x in d.dwData[:count])
+        data = ctypes.string_at(d.dwData, MCDU_DATA_SIZE)
         json_data=create_mobi_json(data)
         if json_data==self.last_data: return
         self.last_data=json_data
