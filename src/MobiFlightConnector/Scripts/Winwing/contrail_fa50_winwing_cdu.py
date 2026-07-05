@@ -8,7 +8,6 @@ from SimConnect.Enum import SIMCONNECT_CLIENT_DATA_ID, SIMCONNECT_RECV_ID, SIMCO
 # --- Config ---
 CAPTAIN_MCDU_URL = "ws://localhost:8320/winwing/cdu-captain"
 FO_MCDU_URL = "ws://localhost:8320/winwing/cdu-co-pilot"
-MCDU_FLAG_SMALL_FONT = 0x01
 
 MCDU_COLOR_MAP = {0:"w",1:"r",2:"o",3:"g",4:"y"}
 
@@ -90,17 +89,17 @@ def create_mobi_json(data:bytes)->str:
             row_offset = ((r-1) * 2) + 1
             if left == 1:
                  idxo = (MCDU_COLUMNS * (row_offset))
-                 out["Data"][idxo] = ['<', 'w', True]
+                 out["Data"][idxo] = ['<', 'w', 1]
             if right == 1:
                 idxo = (MCDU_COLUMNS * (1+row_offset)) -1
-                out["Data"][idxo] = ['>', 'w', True]
+                out["Data"][idxo] = ['>', 'w', 1]
         for c in range(FA50_CDU_COLUMNS):
             idx = (r * (FA50_CDU_COLUMNS * 3)) + (c * 3)
             try:
                 sym, color, s = chr(data[idx]), data[idx+1], data[idx+2]
                 if sym in (" ","\0", "\n"): continue
                 idxo = (MCDU_COLUMNS * r) + (c +1)
-                out["Data"][idxo] = [sym,  "a" if s == 1 else MCDU_COLOR_MAP.get(color, "w"), False]
+                out["Data"][idxo] = [sym,  "a" if s == 1 else MCDU_COLOR_MAP.get(color, "w"), 0]
             except Exception as e:  
                 logging.error(f"Error processing character at index {idx}: {e}")
     return json.dumps(out)
